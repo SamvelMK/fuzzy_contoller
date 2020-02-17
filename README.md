@@ -127,6 +127,10 @@ python recommender_master.py
 
 You should see the following:
 
+<<<<<<< HEAD
 <img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/Capture.jpg" width="40" height="40" />
+=======
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/myFile.gif" width="1000" height="400" />
+>>>>>>> 8b41acadd1763eb7997af6c0a6813a25098dde4c
 
 
