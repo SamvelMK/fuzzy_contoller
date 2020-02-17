@@ -30,9 +30,8 @@ class Pipline:
         ''' Selects only the movies realesed >= 2016 in the US. It also selects only mature movies.'''
         
         data = data[(data.type == 'Movie') & # select only Movies.
-                    (data.release_year >= 2016) & 
                     (data.country == 'United States') & 
-                data.rating.apply(lambda x: x in ['R', 'NC-17', 'TV-MA'])].dropna() # selects only mature films.
+                    data.rating.apply(lambda x: x in ['R', 'NC-17', 'TV-MA'])].dropna() # selects only mature films.
         
         return data
 

@@ -12,10 +12,10 @@ if __name__ == '__main__':
     
     print(f'Welcome {name}.')
     print('')
-    mood = input('How would you rate your mood now from 0 (Very Upset) to  10 (Very Happy).')
+    mood = input('How would you rate your mood now from 1 (Very Upset) to  10 (Very Happy)? ')
     print('')
     print('Thank You!')
-    physical_state = input('How would you rate your physical state from 0 (Exhausted) to 10 (Very Lively)')
+    physical_state = input('How would you rate your physical state now from 1 (Exhausted) to 10 (Very Lively)? ')
     print('')
     print('Thank You! I am generating a few recommendations for you.')
     print('')
