@@ -113,5 +113,20 @@ This is codded as:
 rule_1 = ctrl.Rule(mood['Very Happy'] & physical_state['Very Lively'] & (reviews['Average'] | release_year['New'] |
                                 release_year['Very New']), recommend['Recommend'])
 ```
+The rule base of the current system includes 16 rules in total. It is important to assure the input values activate at least one of the rules in the rule base otherwise you will get an empty set. The rules for this system were derived somewhat arbitrarily. In reality there are regorouse approaches to do that. There is also a way of deriving these rules from the data (e.g., fuzzy adaptive system, fuzzy neural networks).
+
+The third block is the *Defuzzification*. In short, the convert the fuzzy sets to a crisp output value the Mamdani rull cuts the curve based on the fuzzy values and then calculates the area under the curve and takes the centroid of the area.
+
+Now let's take a look how the system runs! :)
+
+To run the system type the following in the command line:
+
+```
+python recommender_master.py
+```
+
+You should see the following:
+
+<img src="myfile.gif" width="40" height="40" />
 
 
