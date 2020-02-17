@@ -127,6 +127,6 @@ python recommender_master.py
 
 You should see the following:
 
-<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/Capture.JPG" width="40" height="40" />
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/Capture.JPG" width="1000" height="500" />
 
 
