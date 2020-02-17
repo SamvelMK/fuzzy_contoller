@@ -127,6 +127,6 @@ python recommender_master.py
 
 You should see the following:
 
-<img src="myfile.gif" width="40" height="40" />
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/myFile.gif" width="40" height="40" />
 
 
