@@ -129,4 +129,6 @@ You should see the following:
 
 <img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/Capture.JPG" width="1000" height="500" />
 
+The final *Defuzzified* outputs are sorted by the recommendation score and by the review scores from Rotten Tomatoes. The output shows only the first five choices.
 
+Enjoy the movie!
