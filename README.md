@@ -3,7 +3,7 @@
 
 ## Building a Mamdani Fuzzy Control System for Movie Recommendations. 
 
-<div align='center'>
+<div align='justify'>
 
 ### Requirements:
 
