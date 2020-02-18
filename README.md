@@ -3,6 +3,7 @@
 
 ## Building a Mamdani Fuzzy Control System for Movie Recommendations. 
 
+<div align='center'>
 
 ### Requirements:
 
@@ -228,3 +229,4 @@ You should see the following:
 The final *Defuzzified* outputs are sorted by the recommendation score and by the review scores from Rotten Tomatoes. The output shows only the first five choices.
 
 Enjoy the movie!
+</div>
