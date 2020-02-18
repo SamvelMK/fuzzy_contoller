@@ -127,17 +127,58 @@ Here, I will not go in depth of how the fuzzification works (I will soon write a
 The second block is the *Inference* engine. Here one needs to specify the rules by which the fuzzy inputs are connected to the output fuzzy output. The rules look like this:
 
 > * __Rule 1:__
-    * If *{Mood}* is <u>Very Happy</u> __AND__ *{Physcial State}* is <u>Very Lively</u> __AND__ the movie *{Reviews}* are <u>Average</u> __OR__ *{Release Year}* is <u>New</u> __OR__  *{Release Year}* is <u>Very New</u> __THEN__ <span style="color:red">__Recommend.__</span>
+    * If *{Mood}* is <u>Very Happy</u> __AND__ *{Physcial State}* is <u>Very Lively</u> __AND__ the movie *{Reviews}* are <u>Average</u> __OR__ *{Release Year}* is <u>New</u> __OR__  * {Release Year}* is <u>Very New</u> __THEN__ <span style="color:red">__Recommend.__</span>
+> * __Rule 2:__
+    * If *{Mood} is <u>Very Happy</u> __AND__ *{Physical State}* is <u>Lively</u> __AND__ (the movie *{Reviews}* are either <u>Average</u> __OR__ *{Release Year}* is <u>New</u>
+    * </u> __THEN__ <span style="color:red">__Recommend.__</span>)
 
-This is codded as:
+These are codded as:
 
 ```
 rule_1 = ctrl.Rule(mood['Very Happy'] & physical_state['Very Lively'] & (reviews['Average'] | release_year['New'] |
                                 release_year['Very New']), recommend['Recommend'])
-```
-The rule base of the current system includes 16 rules in total. It is important to assure the input values activate at least one of the rules in the rule base otherwise you will get an empty set. The rules for this system were derived somewhat arbitrarily. In reality there are regorouse approaches to do that. There is also a way of deriving these rules from the data (e.g., fuzzy adaptive system, fuzzy neural networks).
 
-The third block is the *Defuzzification*. In short, the convert the fuzzy sets to a crisp output value the Mamdani rull cuts the curve based on the fuzzy values and then calculates the area under the curve and takes the centroid of the area.
+rule_2 = ctrl.Rule(mood['Very Happy'] & physical_state['Lively'] & (reviews['Average'] | release_year['New']), 
+                                recommend['Recommend'])
+```
+The rule base of the current system includes 16 rules in total. It is important to assure the input values activate at least one of the rules in the rule base otherwise you will get an empty set. The rules for this system were derived somewhat arbitrarily. In reality there are regorous approaches to do that. There is also a way of deriving these rules from the data (e.g., fuzzy adaptive system, fuzzy neural networks).
+
+The rules include two operators: __AND__ and __OR__. The *And* operator implies a *Minimum* operation on the respective set and *OR* operator implies a *Maximum* operation on the set.
+
+So imagine you have the following inputs for the system:
+```
+Mood = 10
+Physical State = 9
+Reviews = 60
+Release Year = 2000
+
+```
+
+These inputs would yield the following:
+
+```
+A1={min(min({'Mood' : 0.7}, {'Physical State' : 0.1(Very Lively)}), max({'Reviews' : 0.8}, {'Release Year' : 0.45(New), 0.0(Very New)}))} = 0.1
+A2={min(min({'Mood' : 0.7}, {'Physical State' : 0.8(Lively)), max({'Reviews' : 0.8}, {'Release Year' : 0.45(New)))} = 0.7
+```
+This will map onto the ouput curve as:
+
+<div align='center'>
+
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/ouput.JPG" width="600px" height="330px" />
+
+</div>
+
+The third block is the *Defuzzification*. In short, to convert the fuzzy sets (in the above case A'=[0.1,0.7]) to a crisp output value you cut the tip of the curve based on the fuzzy values and then calculate the area under the curve and take the centroid of that area. 
+
+For the above example the defuzzification would look like this:
+
+<div align='center'>
+
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/defuzz.JPG" width="600px" height="330px" />
+
+</div>
+
+Needless to say that this is a simplified example. The ouput could have multiple terms. For instance, you could have Highly Recommend, Not So Much and Do Not Recommend. Each of these terms could have been represented by different membership functions.
 
 Now let's take a look how the system runs! :)
 
@@ -151,7 +192,7 @@ You should see the following:
 
 <div align='center'>
 
-<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/Capture.JPG" width="300px" height="330px" />
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/Capture.JPG" width="600px" height="330px" />
 
 </div>
 
