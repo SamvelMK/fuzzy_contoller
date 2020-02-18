@@ -42,9 +42,9 @@ And you need the kaggle.json (the token) file placed in the same directory.
 kaggle datasets download -d shivamb/netflix-shows
 ```
 
-The data processing pipline takes the raw kaggle dataset and prepares it for the analysis. Because this is a demonstration case I did not went to much into the proper data cleaning process. I build a couple of features based on the available data and applied some basic cleaning procedures. Totally unnecessary for this case, but wanted to have fun, I decided run the pipline tasks in parallel. In other words the dataset is partitioned into 10 parts and then the cleaning tasks are implemented on each partition in parallel. Afterwards, the cleaned segments are concatinated. At the end a clean_data.csv file is outputted.
+The data processing pipline takes the raw kaggle dataset and prepares it for the analysis. Because this is a demonstration case I did not went to much into the proper data cleaning process. I built a couple of features based on the available data and applied some basic cleaning procedures. Totally unnecessary for this case, but wanted to have fun, I decided to run the pipline tasks in parallel. In other words, the dataset is partitioned into 10 parts and then the cleaning tasks are implemented on each partition in parallel. Afterwards, the cleaned segments are concatinated. At the end a clean_data.csv file is outputted.
 
-The pipline selects only 'Movies' released in the United States and are only in the 'Mature' category according to the Netflix Categorization scheme.
+The pipline filters only 'Movies' released in the United States and are in the 'Mature' category according to the Netflix Categorization scheme.
 The dataset included the following features:
 
 ```
@@ -92,7 +92,7 @@ __Description_len__ and the __title_len__ are the length of the description and 
 
 The Fuzzy Control System includes three blocks: 1) __Fuzzification__, 2) __Inference,__ 3) __Defuzzification.__
 
-In the __Fuzzification__ stage, the crisp input (aka antecedent) is converted to a fuzzy set which is passed to the __Inference__ engine. The fuzzy input sets activate certain rules in the rule base which gives a fuzzy output set (for the consequent). Afterwards __Deffuzzification__ converts the fuzzy ouput set into a crisp value.
+In the __Fuzzification__ stage, the crisp input (aka antecedent) is converted to a fuzzy set which is passed to the __Inference__ engine. The fuzzy input sets activate certain rules in the rule base which gives a fuzzy output set. Afterwards __Deffuzzification__ converts the fuzzy ouput set into a crisp value.
 
 For this system I decided to use two types of input variables: User's internal state and features of the movies in the database.
 The User's internal state includes the user's mood (Very Happy -> Very Upset) and the physical state (Exchausted -> Very lively). The features of the movies are the ones presented above. Now the system is only going to ask the user to specify the to internal states and the rest is going to be taken from the respective database. 
@@ -126,7 +126,7 @@ This would look like:
 
 </div>
 
-For the system output (i.e., recommendation score) I specified an *S-Shapped* membership function. For this you need to specify the uper and the lower bounds (0,1 in this case).
+For the system output (aka consequent; recommendation score) I specified an *S-Shapped* membership function. For this you need to specify the uper and the lower bounds (0,1 in this case).
 
 
 ```
@@ -178,7 +178,7 @@ These inputs would yield the following:
 
 ```
 A1={min(min({'Mood' : 0.7}, {'Physical State' : 0.1(Very Lively)}), max({'Reviews' : 0.8}, {'Release Year' : 0.45(New), 0.0(Very New)}))} = 0.1
-A2={min(min({'Mood' : 0.7}, {'Physical State' : 0.8(Lively)), max({'Reviews' : 0.8}, {'Release Year' : 0.45(New)))} = 0.7
+A2={min(min({'Mood' : 0.7}, {'Physical State' : 0.8(Lively)}), max({'Reviews' : 0.8}, {'Release Year' : 0.45(New)))} = 0.7
 ```
 This will map onto the ouput curve as:
 
@@ -202,7 +202,7 @@ For the above example the defuzzification would look like this:
 
 Needless to say that this is a simplified example. The ouput could have multiple terms. For instance, you could have Highly Recommend, Not So Much and Do Not Recommend. Each of these terms could have been represented by different membership functions.
 
-Now let's take a look how the system runs! :)
+Now let's take a look at how the system runs! :)
 
 To run the system type the following in the command line:
 
