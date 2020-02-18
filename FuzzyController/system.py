@@ -9,10 +9,10 @@ from datetime import datetime
 def set_up_system():
     # Defining the Universe of Discourse of Each Linguistic Variable.
     # Movie Characteristics
-    release_year = ctrl.Antecedent(np.arange(2016, 2021, 1), 'Year')
+    release_year = ctrl.Antecedent(np.arange(1967, 2021, 1), 'Year')
     title_len = ctrl.Antecedent(np.arange(3, 49, 1), 'Title Length')
     desc_len = ctrl.Antecedent(np.arange(120, 161, 1), 'Description Length')
-    duration = ctrl.Antecedent(np.arange(53, 209, 1), 'Movie Length')
+    duration = ctrl.Antecedent(np.arange(53, 210, 1), 'Movie Length')
     polarity = ctrl.Antecedent(np.arange(-1, 1, 0.0001), 'Polarity')
     subjectivity = ctrl.Antecedent(np.arange(53, 209, 1), 'Subjectivity')
     reviews = ctrl.Antecedent(np.arange(0, 100, 1), 'Reviews')

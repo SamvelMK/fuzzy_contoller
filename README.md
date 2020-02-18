@@ -98,7 +98,29 @@ For this system I decided to use two types of input variables: User's internal s
 The User's internal state includes the user's mood (Very Happy -> Very Upset) and the physical state (Exchausted -> Very lively). The features of the movies are the ones presented above. Now the system is only going to ask the user to specify the to internal states and the rest is going to be taken from the respective database. 
 
 For the fuzzification block I need to specify the Universe of Discourse (i.e., the domain of the inputs), the set of terms for each linguistic variables (Very Old', 'Old', 'Not So Old', 'New', 'Very New') and the respective membership function for each term.
-Because this is a demonstration case, I wanted to show how you can specify different membership functions. For this I used three types of membership functions: *Triangular*, *Gaussian* and *S-Shaped*. The Skit-Fuzzy module in python allows for automatic generation of triangular membership function. For this you need to specify only the number of the terms and the terms themselves. Other functions you must specify manually (maybe you could do it automatically but couldn't find it in the documentation). For example, I specified a *Gaussian* membership function for the duration of the movie. For each term you need to specify the mean and the standard deviation of the curve. For the system output (i.e., recommendation score) I specified an *S-Shapped* membership function. For this you need to specify the uper and the lower bounds (0,1 in this case).
+Because this is a demonstration case, I wanted to show how you can specify different membership functions. For this I used three types of membership functions: *Triangular*, *Gaussian* and *S-Shaped*. The Skit-Fuzzy module in python allows for automatic generation of triangular membership function. For this you need to specify only the number of the terms and the terms themselves.
+
+<div align='center'>
+
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/trmf.JPG" width="1500px" height="1650px"/>
+
+</div>
+
+Other functions you must specify manually (maybe you could do it automatically but couldn't find it in the documentation). For example, I specified a *Gaussian* membership function for the duration of the movie. For each term you need to specify the mean and the standard deviation of the curve. 
+
+<div align='center'>
+
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/gausmf.JPG" width="1500px" height="1650px" />
+
+</div>
+
+For the system output (i.e., recommendation score) I specified an *S-Shapped* membership function. For this you need to specify the uper and the lower bounds (0,1 in this case).
+
+<div align='center'>
+
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/smf.JPG" width="1500px" height="1650px" />
+
+</div>
 
 Here, I will not go in depth of how the fuzzification works (I will soon write a more detailed blog on this) it would suffice to say that the membership function maps the Universe of Discourse and the set of terms to the fuzzy range of [0,1]. After which each input variable can be converted into a fuzzy set that reflects its degree of membership to the specified terms.
 
@@ -127,7 +149,11 @@ python recommender_master.py
 
 You should see the following:
 
-<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/Capture.JPG" width="1000" height="500" />
+<div align='center'>
+
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/Capture.JPG" width="1500px" height="1650px" />
+
+</div>
 
 The final *Defuzzified* outputs are sorted by the recommendation score and by the review scores from Rotten Tomatoes. The output shows only the first five choices.
 
