@@ -102,7 +102,7 @@ Because this is a demonstration case, I wanted to show how you can specify diffe
 
 <div align='center'>
 
-<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/trmf.JPG" width="150px" height="165px"/>
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/trmf.JPG" width="300px" height="330px"/>
 
 </div>
 
@@ -110,7 +110,7 @@ Other functions you must specify manually (maybe you could do it automatically b
 
 <div align='center'>
 
-<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/gausmf.JPG" width="150px" height="165px" />
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/gausmf.JPG" width="300px" height="330px" />
 
 </div>
 
@@ -118,7 +118,7 @@ For the system output (i.e., recommendation score) I specified an *S-Shapped* me
 
 <div align='center'>
 
-<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/smf.JPG" width="150px" height="165px" />
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/smf.JPG" width="300px" height="330px" />
 
 </div>
 
@@ -151,7 +151,7 @@ You should see the following:
 
 <div align='center'>
 
-<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/Capture.JPG" width="1500px" height="1650px" />
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/Capture.JPG" width="300px" height="330px" />
 
 </div>
 
