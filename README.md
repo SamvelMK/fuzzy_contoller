@@ -177,7 +177,7 @@ These inputs fill be fuzzified as follows:
 
 <div align='center'>
 
-<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/fuzz.JPG" width="600px" height="330px" />
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/fuzzification.JPG" width="600px" height="330px" />
 
 </div>
 
