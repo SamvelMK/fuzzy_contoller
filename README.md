@@ -173,6 +173,14 @@ Reviews = 60
 Release Year = 2000
 
 ```
+These inputs fill be fuzzified as follows:
+
+<div align='center'>
+
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/fuzz.JPG" width="600px" height="330px" />
+
+</div>
+
 
 These inputs would yield the following:
 
