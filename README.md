@@ -178,7 +178,7 @@ These inputs would yield the following:
 
 ```
 A1={min(min({'Mood' : 0.7}, {'Physical State' : 0.1(Very Lively)}), max({'Reviews' : 0.8}, {'Release Year' : 0.45(New), 0.0(Very New)}))} = 0.1
-A2={min(min({'Mood' : 0.7}, {'Physical State' : 0.8(Lively)}), max({'Reviews' : 0.8}, {'Release Year' : 0.45(New)))} = 0.7
+A2={min(min({'Mood' : 0.7}, {'Physical State' : 0.8(Lively)}), max({'Reviews' : 0.8}, {'Release Year' : 0.45(New)})} = 0.7
 ```
 This will map onto the ouput curve as:
 
