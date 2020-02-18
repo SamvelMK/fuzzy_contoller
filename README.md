@@ -42,7 +42,7 @@ And you need the kaggle.json (the token) file placed in the same directory.
 kaggle datasets download -d shivamb/netflix-shows
 ```
 
-The data processing pipline takes the raw kaggle dataset and prepares it for the analysis. Because this is a demonstration case I did not went to much into the proper data cleaning process. I built a couple of features based on the available data and applied some basic cleaning procedures. Totally unnecessary for this case, but wanted to have fun, I decided to run the pipline tasks in parallel. In other words, the dataset is partitioned into 10 parts and then the cleaning tasks are implemented on each partition in parallel. Afterwards, the cleaned segments are concatinated. At the end a clean_data.csv file is outputted.
+The data processing pipline takes the raw kaggle dataset and prepares it for the analysis. Because this is a demonstration case I did not went too much into the proper data cleaning process. I built a couple of features based on the available data and applied some basic cleaning procedures. Totally unnecessary for this case, but wanted to have fun, I decided to run the pipline tasks in parallel. In other words, the dataset is partitioned into 10 parts and then the cleaning tasks are implemented on each partition in parallel (on multiple cores). Afterwards, the cleaned segments are concatinated. At the end a clean_data.csv file is outputted.
 
 The pipline filters only 'Movies' released in the United States and are in the 'Mature' category according to the Netflix Categorization scheme.
 The dataset included the following features:
@@ -86,7 +86,7 @@ rotten_score       352 non-null float64
 dtypes: float64(3), int64(5), object(3)
 memory usage: 30.3+ KB
 ```
-__Description_len__ and the __title_len__ are the length of the description and the title of the movie (number of characters). Later on I decided not to use these features. __mv_dur__ is the movie duration in minutes. __Polarity__ and __subjectivity__ scores are from the sentiment analysis of the description text. The polarity (ranges from -1 to 1) reflects the positivity of the text whereas the subjectivty score reflects the extent to which it is oppinionated (ranges from 0,1). The __rotten score__ is the *Rotten Tomattoes* review score. This was necessary because netflix does not provide review data. To obtain this score I used the *Rotten Tomatoes* python API. Because of the time constraint I decided to limit the Fuzzy Control System to only the following features: *release_year, movie duration, polarity, subjectivity and rotten score.*
+__Description_len__ and the __title_len__ are the length of the description and the title of the movie (number of characters). Later on I decided not to use these features. __mv_dur__ is the movie duration in minutes. __Polarity__ and __subjectivity__ scores are from the sentiment analysis of the description text. The polarity (range [-1,1]) reflects the positivity of the text whereas the subjectivty score reflects the extent to which it is oppinionated (range [0,1]). The __rotten score__ is the *Rotten Tomatoes* review score. This was necessary because Netflix does not provide review data. To obtain this score I used the *Rotten Tomatoes* python API. Because of the time constraint I decided to limit the Fuzzy Control System to only the following features: *release_year, movie duration, polarity, subjectivity, time of the day (obtained automatically during the search), and rotten score.*
 
 ### Fuzzy Control System
 
@@ -95,10 +95,10 @@ The Fuzzy Control System includes three blocks: 1) __Fuzzification__, 2) __Infer
 In the __Fuzzification__ stage, the crisp input (aka antecedent) is converted to a fuzzy set which is passed to the __Inference__ engine. The fuzzy input sets activate certain rules in the rule base which gives a fuzzy output set. Afterwards __Deffuzzification__ converts the fuzzy ouput set into a crisp value.
 
 For this system I decided to use two types of input variables: User's internal state and features of the movies in the database.
-The User's internal state includes the user's mood (Very Happy -> Very Upset) and the physical state (Exchausted -> Very lively). The features of the movies are the ones presented above. Now the system is only going to ask the user to specify the to internal states and the rest is going to be taken from the respective database. 
+The User's internal state includes the user's mood (Very Happy -> Very Upset) and the physical state (Exchausted -> Very lively). The features of the movies are the ones presented above. The system is only going to ask the user to specify the to internal states and the rest is going to be taken from the respective database. 
 
-For the fuzzification block I need to specify the Universe of Discourse (i.e., the domain of the inputs), the set of terms for each linguistic variables (Very Old', 'Old', 'Not So Old', 'New', 'Very New') and the respective membership function for each term.
-Because this is a demonstration case, I wanted to show how you can specify different membership functions. For this I used three types of membership functions: *Triangular*, *Gaussian* and *S-Shaped*. The Skit-Fuzzy module in python allows for automatic generation of triangular membership function. For this you need to specify only the number of the terms and the terms themselves.
+For the fuzzification block I need to specify the Universe of Discourse (i.e., the domain of each input), the set of terms for each linguistic variables (Very Old', 'Old', 'Not So Old', 'New', 'Very New') and the respective membership function for each term.
+Because this is a demonstration case, I wanted to show how you can specify different membership functions. For this, I used three types of membership functions: *Triangular*, *Gaussian* and *S-Shaped*. The Skit-Fuzzy module in python allows for automatic generation of triangular membership function. For this you need to specify only the number of the terms and the terms themselves.
 
 <div align='center'>
 
@@ -145,7 +145,7 @@ Here, I will not go in depth of how the fuzzification works (I will soon write a
 The second block is the *Inference* engine. Here one needs to specify the rules by which the fuzzy inputs are connected to the output fuzzy output. The rules look like this:
 
 > * __Rule 1:__
-    * If *{Mood}* is <u>Very Happy</u> __AND__ *{Physcial State}* is <u>Very Lively</u> __AND__ the movie *{Reviews}* are <u>Average</u> __OR__ *{Release Year}* is <u>New</u> __OR__  * {Release Year}* is <u>Very New</u> __THEN__ <span style="color:red">__Recommend.__</span>
+    * If *{Mood}* is <u>Very Happy</u> __AND__ *{Physcial State}* is <u>Very Lively</u> __AND__ the movie *{Reviews}* are <u>Average</u> __OR__ *{Release Year}* is <u>New</u> __OR__  * *{Release Year}* is <u>Very New</u> __THEN__ <span style="color:red">__Recommend.__</span>
 > * __Rule 2:__
     * If *{Mood} is <u>Very Happy</u> __AND__ *{Physical State}* is <u>Lively</u> __AND__ (the movie *{Reviews}* are either <u>Average</u> __OR__ *{Release Year}* is <u>New</u>
     * </u> __THEN__ <span style="color:red">__Recommend.__</span>)
@@ -161,7 +161,7 @@ rule_2 = ctrl.Rule(mood['Very Happy'] & physical_state['Lively'] & (reviews['Ave
 
 Yeah these two rules are perhaps not the best but should do fine to get the point across. :P 
 ```
-The rule base of the current system includes 16 rules in total. It is important to assure the input values activate at least one of the rules in the rule base otherwise you will get an empty set. The rules for this system were derived somewhat arbitrarily. In reality there are regorous approaches to do that. There is also a way of deriving these rules from the data (e.g., fuzzy adaptive system, fuzzy neural networks).
+The rule base of the current system includes 16 rules in total. It is important to assure the input values activate at least one of the rules in the rule base, otherwise you will get an empty set. The rules for this system were derived somewhat arbitrarily. In reality there are regorous approaches to do that. There is also a way of deriving these rules from the data (e.g., fuzzy adaptive system, fuzzy neural networks).
 
 The rules include two operators: __AND__ and __OR__. The *And* operator implies a *Minimum* operation on the respective set and *OR* operator implies a *Maximum* operation on the set.
 
@@ -171,7 +171,6 @@ Mood = 10
 Physical State = 9
 Reviews = 60
 Release Year = 2000
-
 ```
 These inputs fill be fuzzified as follows:
 
@@ -196,9 +195,9 @@ This will map onto the ouput curve as:
 
 </div>
 
-What this essentially shows is that the same inputs to the system activate the output node/variable/space to different degrees. 
+What this essentially shows is that the same inputs to the system activate the output (antecedent) to different degrees. 
 
-The third block is the *Defuzzification*. In short, to convert the fuzzy sets (in the above case A'=[0.1,0.7]) to a crisp output value you cut the tip of the curve based on the fuzzy values and then calculate the area under the curve and take the centroid of that area. 
+The third block is the *Defuzzification*. In short, to convert the fuzzy sets (in the above case A'=[0.1,0.7]) into a crisp output value you cut the tip of the curve based on the fuzzy values and then calculate the area under the curve and take the centroid of that area. For continuous universe you would use an integration, and in case of a descrete case you would use a summation. 
 
 For the above example the defuzzification would look like this:
 
@@ -208,7 +207,7 @@ For the above example the defuzzification would look like this:
 
 </div>
 
-Needless to say that this is a simplified example. The ouput could have multiple terms. For instance, you could have Highly Recommend, Not So Much and Do Not Recommend. Each of these terms could have been represented by different membership functions.
+Needless to say that this is a simplified example. The ouput could have multiple terms. For instance, you could have: Highly Recommend, Not So Much and Do Not Recommend. Each of these terms could have been represented by different membership functions.
 
 Now let's take a look at how the system runs! :)
 
