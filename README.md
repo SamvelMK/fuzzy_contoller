@@ -140,6 +140,8 @@ rule_1 = ctrl.Rule(mood['Very Happy'] & physical_state['Very Lively'] & (reviews
 
 rule_2 = ctrl.Rule(mood['Very Happy'] & physical_state['Lively'] & (reviews['Average'] | release_year['New']), 
                                 recommend['Recommend'])
+
+Yeah these two rules are perhaps not the best but should do fine to get the point across. :P 
 ```
 The rule base of the current system includes 16 rules in total. It is important to assure the input values activate at least one of the rules in the rule base otherwise you will get an empty set. The rules for this system were derived somewhat arbitrarily. In reality there are regorous approaches to do that. There is also a way of deriving these rules from the data (e.g., fuzzy adaptive system, fuzzy neural networks).
 
@@ -167,6 +169,8 @@ This will map onto the ouput curve as:
 <img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/output.JPG" width="600px" height="330px" />
 
 </div>
+
+What this essentially shows is that the same inputs to the system activate the output node/variable/space to different degrees. 
 
 The third block is the *Defuzzification*. In short, to convert the fuzzy sets (in the above case A'=[0.1,0.7]) to a crisp output value you cut the tip of the curve based on the fuzzy values and then calculate the area under the curve and take the centroid of that area. 
 
