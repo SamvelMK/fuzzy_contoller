@@ -164,7 +164,7 @@ This will map onto the ouput curve as:
 
 <div align='center'>
 
-<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/ouput.JPG" width="600px" height="330px" />
+<img src="https://github.com/SamvelMK/fuzzy_contoller/blob/master/images/output.JPG" width="600px" height="330px" />
 
 </div>
 
